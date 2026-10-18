@@ -10,18 +10,27 @@ const stage = new Konva.Stage({
 // then create layer
 const layer = new Konva.Layer();
 
-// create our shape
-const circle = new Konva.Circle({
+const lemon = new Konva.Shape({
   x: stage.width() / 2,
   y: stage.height() / 2,
-  radius: 70,
-  fill: 'red',
+  sceneFunc: (ctx, shape) => {
+    ctx.beginPath();
+    ctx.moveTo(-110, 5);        //left tip                     
+    ctx.bezierCurveTo(-90, -10, -80, -70, 0, -65);    //pull point 1, pull point 2, endpoint
+    ctx.bezierCurveTo(70, -60, 85, -15, 110, -5);     
+    ctx.bezierCurveTo(90, 10, 80, 65, 0, 65);         
+    ctx.bezierCurveTo(-70, 60, -85, 15, -110, 5); 
+    ctx.closePath(); //seals the left corner
+    ctx.fillStrokeShape(shape);//paints with the code below
+  },
+  fill: 'yellow',
   stroke: 'black',
-  strokeWidth: 4
+  strokeWidth: 10,
+  lineJoin: 'round'
 });
 
 // add the shape to the layer
-layer.add(circle);
+layer.add(lemon);
 
 // add the layer to the stage
 stage.add(layer);
